@@ -1,0 +1,344 @@
+<html>
+    <head>
+        <title>
+            Login
+        </title>
+    </head>
+    <body>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <div id='login-box' class='box'>
+            <form method="post" action="">
+                <label id='label0' class='label0'>Log in / Sign up</label><br>
+                <label id='username_label'></label>
+                <br>
+                <div id='reset_div' class='reset_div'>Reset</div>
+                <input id='input0' name='input0' class='input' placeholder='Username or Email ID'><br>
+                <input type='submit' id='button0' class='button0'>Next</button>
+            </form>
+        </div>
+
+        <div id='signup-box' class="box">
+            <form method="post" action="">
+                <label class='label0'>Sign up</label><br>
+                <br>
+                <div id='reset_div2' class='reset_div' name='reset_div2'>Reset</div>
+                <br>
+                <label class="label1">Name</label>
+                <input id='signup_name' class="input" name='signup_name'>
+                <br><br>
+
+                <label id='signup_email_warning' class="label-warning">An account with this email id already exists</label><br>
+                <label class="label1">Email</label>
+                <input id='signup_email' name='signup_email' class="input" placeholder="example@example.com">
+                <br><br>
+
+                <label id='signup_username_warning' class="label-warning">Username already in use</label><br>
+                <label class="label1">Username</label>
+                <input id='signup_username' name='signup_username' class="input">
+                <br><br>
+                <br>
+                <label class="label1">Password</label>
+                <input id='signup_pw1' name='signup_pw1' class="input" type="password">
+                <br><br>
+
+                <label id='signup_pw_warning' class="label-warning">Password do not match</label><br>
+                <label class="label1">Confirm password</label>
+                <input id='signup_pw2' class="input" type="password">
+                <br><br>
+
+                <input type='submit' id='button_signup' class='button0'>Sign up</button>
+            </form>
+        </div>
+        <style>
+            body {
+                background-color: #8888ff;
+            }
+
+            .box {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                background-color: #aaaaff;
+                text-align: center;
+                border-radius: 20px;
+                display: none;
+            }
+
+            .label0 {
+                font-family: 'Times New Roman', Times, serif;
+                font-weight: bold;
+                font-size: x-large;
+                padding: 10px;
+                -webkit-user-select: none; /* Safari */        
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* IE10+/Edge */
+                user-select: none; /* Standard */
+            }
+
+            .label1 {
+                font-family: 'Times New Roman', Times, serif;
+                display: block;
+                width: 8ch;
+                margin-left: 1ch;
+                float: left;
+            }
+
+            .label-warning {
+                display: block;
+                color: transparent;
+                white-space: nowrap;
+                margin-left: 1ch;
+                margin-right: 1ch;
+                -webkit-user-select: none; /* Safari */        
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* IE10+/Edge */
+                user-select: none; /* Standard */
+            }
+
+            .input {
+                width: 30ch;
+                margin-left: 2ch;
+                margin-right: 2ch;
+                font-size: large;
+                background: transparent;
+                border: 0;
+                outline: 0;
+                border-bottom: 1px solid#444444;
+            }
+
+            .reset_div {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                text-align: left;
+                margin-left: 2ch;
+                background-color: transparent;
+                color: blue;
+                outline: none;
+                cursor: pointer;
+            }
+
+            .button0 {
+                width: 90%;
+                margin: 5%;
+                font-size: larger;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                background-color: #229922;
+                color: white;
+                border: none;
+                outline: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+
+            .button0:hover {
+                background-color: #005500;
+            }
+
+            .button0:disabled,
+            .button0[disabled]{
+                border: 1px solid #999999;
+                background-color: #cccccc;
+                color: #666666;
+            }
+        </style>
+
+        <script type="text/javascript">
+
+            //-----INITIALIZATION-----
+
+            var sample_account={
+                "qwerty@asdf.com":"qwerty123",
+                "qwerty":"qwerty123",
+                "lolman":"hahaha@123",
+                "username":"password"
+            };
+            var entered_userid;
+            var signup_validation=[0,1,1,0,0];
+            var signup_email;
+            var signup_username;
+            var signup_name;
+            var signup_pw1;
+            var signup_pw2;
+            document.getElementById('reset_div').onclick=reset;
+            document.getElementById('reset_div2').onclick=reset;
+            document.getElementById('button0').onclick=login_or_signup;
+            document.getElementById('button_signup').onclick=signup;
+
+            document.getElementById('input0').addEventListener('keyup',function(event){
+                if (event.keyCode === 13){
+                    document.getElementById('button0').click();
+                    if(document.getElementById('input0').getAttribute('placeholder')=='Password'&&
+                    document.getElementById('input0').value!='')
+                    document.activeElement.blur();
+                }
+            })
+
+            //-----VALIDATION OF INPUTS-----
+
+            function signup_validation_func(){
+                if(signup_validation.includes(0)==false) document.getElementById('button_signup').disabled=false;
+                else document.getElementById('button_signup').disabled=true;
+            }
+            signup_validation_func()
+
+            document.getElementById('input0').oninput=function(){ //login_user id
+                if(document.getElementById('input0').getAttribute('placeholder')=='Password') return;
+                entered_userid=document.getElementById('input0').value;
+                if(entered_userid in sample_account==false && entered_userid==entered_userid.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/))
+                    document.getElementById('button0').innerText='Sign up'; 
+                else
+                    document.getElementById('button0').innerText='Next'; 
+            }
+
+            document.getElementById('signup_email').oninput=function(){ //signup_email
+                signup_email=document.getElementById('signup_email').value;
+                document.getElementById('signup_email_warning').style.color='transparent';
+                if(signup_email!=signup_email.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)){ // Invalid email id
+                    document.getElementById('signup_email').style.backgroundColor='#ffaaaa';
+                    signup_validation[1]=0;
+                }
+                else{
+                    if(signup_email in sample_account==false){ // Valid email id
+                        document.getElementById('signup_email').style.backgroundColor='#aaffaa';
+                        signup_email_valid=1;
+                        signup_validation[1]=1;
+                    }
+                    else{ // Account exists
+                        document.getElementById('signup_email').style.backgroundColor='#ffaaaa';
+                        signup_email_valid=0;
+                        document.getElementById('signup_email_warning').style.color='red';
+                        signup_validation[1]=0;
+                    }
+                }
+                signup_validation_func();
+            }
+
+            document.getElementById('signup_username').oninput=function(){ // signup_username
+                signup_username=document.getElementById('signup_username').value;
+                if(signup_username in sample_account==false){ // Valid username
+                    document.getElementById('signup_username').style.backgroundColor='#aaffaa';
+                    document.getElementById('signup_username_warning').style.color='transparent';
+                    signup_validation[2]=1;
+                }
+                else{ // Invalid username
+                    document.getElementById('signup_username').style.backgroundColor='#ffaaaa';
+                    document.getElementById('signup_username_warning').style.color='red';
+                    signup_validation[2]=0;
+                }
+                signup_validation_func();
+            }
+
+            document.getElementById('signup_name').oninput=function(){ // sugnup_name
+                signup_name=document.getElementById('signup_name').value;
+                if(signup_name!=''){
+                    document.getElementById('signup_name').style.backgroundColor='#aaffaa';
+                    signup_validation[0]=1;
+                }
+                else{
+                    document.getElementById('signup_name').style.backgroundColor='#ffaaaa';
+                    signup_validation[0]=0;
+                }
+                signup_validation_func();
+            }
+
+            document.getElementById('signup_pw1').oninput=function(){ // sugnup_name
+                signup_pw1=document.getElementById('signup_pw1').value;
+                if(signup_pw1!=''){
+                    document.getElementById('signup_pw1').style.backgroundColor='#aaffaa';
+                    signup_validation[3]=1;
+                }
+                else{
+                    document.getElementById('signup_pw1').style.backgroundColor='#ffaaaa';
+                    signup_validation[3]=0;
+                }
+                document.getElementById('signup_pw2').oninput();
+                signup_validation_func();
+            }
+
+            document.getElementById('signup_pw2').oninput=function(){ // sugnup_name
+                signup_pw1=document.getElementById('signup_pw1').value;
+                signup_pw2=document.getElementById('signup_pw2').value;
+                if(signup_pw1==signup_pw2){
+                    document.getElementById('signup_pw2').style.backgroundColor='#aaffaa';
+                    document.getElementById('signup_pw_warning').style.color='transparent';
+                    signup_validation[4]=1;
+                }
+                else{
+                    document.getElementById('signup_pw2').style.backgroundColor='#ffaaaa';
+                    document.getElementById('signup_pw_warning').style.color='red';
+                    signup_validation[4]=0;
+                }
+                signup_validation_func();
+            }
+
+            //-----FUNCTIONS-----
+            function login_or_signup(){
+                if(document.getElementById('input0').getAttribute('placeholder')=='Password'){
+                    login();
+                    return;
+                }
+                entered_userid=document.getElementById('input0').value;
+                if(entered_userid in sample_account){
+                    document.getElementById('username_label').innerText=entered_userid;
+                    document.getElementById('username_label').style.color='#000000';
+                    document.getElementById('input0').value='';
+                    document.getElementById('input0').setAttribute('placeholder','Password');
+                    document.getElementById('input0').setAttribute('type','password');
+                    document.getElementById('label0').innerText='Login';
+                    document.getElementById('button0').innerText='Login';
+                }
+                else if(document.getElementById('button0').innerText=='Next'){
+                    document.getElementById('username_label').innerText='The entered account does not exist.\nEnter your email id to sign up.';
+                    document.getElementById('username_label').style.color='#ff0000';
+                }
+                else{
+                    document.getElementById('login-box').style.display='none';
+                    document.getElementById('signup-box').style.display='block';
+                    document.getElementById('signup_email').value=entered_userid;
+                    signup_email=entered_userid;
+                    document.getElementById('signup_email').style.backgroundColor='#aaffaa';
+                }
+            }
+
+            function signup(){
+                sample_account[signup_email]=signup_pw1;
+                if(signup_username!=''){
+                    sample_account[signup_username]=signup_pw1
+                }
+                var a=document.getElementsByClassName('input');
+                for(var i=0;i<a.length;i++){
+                    a[i].value='';
+                    a[i].style.backgroundColor='transparent';
+                }
+                signup_validation=[0,1,1,0,0];
+                confirm('Account created successfully!');
+                reset();
+            }
+
+            function login(){
+                if(sample_account[entered_userid]==document.getElementById('input0').value) alert('Login successful :)');
+                else alert('Wrong password :(');
+            }
+
+            function reset(){ // Reset UI
+                document.getElementById('username_label').innerText='';
+                document.getElementById('input0').value='';
+                document.getElementById('input0').setAttribute('placeholder','Username or Email ID');
+                document.getElementById('input0').setAttribute('type','text');
+                document.getElementById('label0').innerText='Login / Signup';
+                document.getElementById('button0').innerText='Next';
+                document.getElementById('signup-box').style.display='none';
+                document.getElementById('login-box').style.display='block';
+                signup_validation=[0,1,1,0,0];
+                var a=document.getElementsByClassName('input');
+                for(var i=0;i<a.length;i++){
+                    a[i].value='';
+                    a[i].style.backgroundColor='transparent';
+                }
+            }
+
+            reset();
+
+        </script>
+    </body>
+</html>
