@@ -1,7 +1,7 @@
 # login-page_front-end-sample
 front end part of a login/signup page developed using html,css and javascript
 
-[Click here](https://vyasdev217.github.io/login-page_front-end-sample/) to view the login page.
+[Click here](https://vyasdev217.github.io/templates/html-login-page/login-signup-frontend-sample.html) to view the login page.
 
 ## Sample accounts
 
