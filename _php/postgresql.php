@@ -36,17 +36,24 @@ function db_insert($table,$data){
 
 # SQL DELETE
 function db_delete($table,$condition){
-  $data_keys=array_keys($data);
-  for($i=0;$i<count($data_keys);$i++)
-    $condition_str=$condition_str.",".$data_keys[i]."="."'".$data[$data_keys[i]]."'";
+  $condition_keys=array_keys($condition);
+  for($i=0;$i<count($condition_keys);$i++)
+    $condition_str=$condition_str.",".$condition_keys[i]."="."'".$condition[$condition_keys[i]]."'";
   $condition_str=substr($condition_str,1);
   db_query("DELETE FROM ".$table."WHERE ".$condition_str.";");
 }
 
-// TODO: Complete db_edit()
 # SQL UPDATE
-function db_edit($table,$data){
-  db_query("UPDATE ".$table." SET ".$update_str." WHERE ".$update_condition_str);
+function db_edit($table,$data,$condition){
+  $data_keys=array_keys($data);
+  for($i=0;$i<count($data_keys);$i++)
+    $data_str=$data_str.",".$data_keys[i]."="."'".$data[$data_keys[i]]."'";
+  $data_str=substr($data_str,1);
+  $condition_keys=array_keys($condition);
+  for($i=0;$i<count($condition_keys);$i++)
+    $condition_str=$condition_str.",".$condition_keys[i]."="."'".$condition[$condition_keys[i]]."'";
+  $condition_str=substr($condition_str,1);
+  db_query("UPDATE ".$table." SET ".$data_str." WHERE ".$condition_str);
 }
 
 ?>
