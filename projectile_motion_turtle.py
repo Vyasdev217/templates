@@ -1,3 +1,6 @@
+vel=52
+a=45
+
 import math
 from time import sleep
 import turtle
@@ -22,7 +25,8 @@ def proj(vel, angle):
     sx=-200
     sy=-200
     t=turtle.Turtle()
-    t.speed(10)
+    #t.speed(10)
+    t.speed(round(10*pow((vx**2)+(vy**2),0.5)/vel))
     t.hideturtle()
     t.penup()
     time=0
@@ -33,7 +37,10 @@ def proj(vel, angle):
         sy+=(vy-9.8*time)*0.1
         t.setposition([sx,sy])
         time+=0.1
-#for i in range(2,90,2):
-#    proj(70,i)
-proj(50,42)
+R=(vel**2)*math.sin(math.radians(2*a))/9.8
+t.penup()
+t.setposition((-325,200))
+t.pendown()
+t.write("Initial veocity:"+str(vel)+"\n"+"Initial inclination:"+str(a)+" degree\n"+"Max. height:"+str(round(R*math.sin(math.radians(2*a)),2))+"\n"+"Range:"+str(round(R,2))+"\n")
+proj(vel,a)
 sleep(5)
