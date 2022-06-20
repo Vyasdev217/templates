@@ -1,5 +1,5 @@
-vel=52
-a=45
+vel=70
+a=30
 
 import math
 from time import sleep
@@ -11,12 +11,14 @@ t.speed(10)
 t.hideturtle()
 t.penup()
 time=0
+R=(vel**2)*math.sin(math.radians(2*a))/9.8
+H=((vel*math.sin(math.radians(a)))**2)*0.5/9.8
 t.setposition([sx,sy])
 t.pendown()
-t.forward(500)
+t.forward(R+20)
 t.setposition([sx,sy])
 t.left(90)
-t.forward(500)
+t.forward(H+20)
 t.setposition([sx,sy])
 
 def proj(vel, angle):
@@ -37,10 +39,9 @@ def proj(vel, angle):
         sy+=(vy-9.8*time)*0.1
         t.setposition([sx,sy])
         time+=0.1
-R=(vel**2)*math.sin(math.radians(2*a))/9.8
 t.penup()
-t.setposition((-325,200))
+t.setposition((-335,200))
 t.pendown()
-t.write("Initial veocity:"+str(vel)+"\n"+"Initial inclination:"+str(a)+" degree\n"+"Max. height:"+str(round(R*math.sin(math.radians(2*a)),2))+"\n"+"Range:"+str(round(R,2))+"\n")
+t.write("Initial veocity: "+str(vel)+"\n"+"Initial inclination: "+str(a)+" degree\n"+"Max. height: "+str(round(H,2))+"\n"+"Range: "+str(round(R,2))+"\n")
 proj(vel,a)
-sleep(5)
+sleep(10)
