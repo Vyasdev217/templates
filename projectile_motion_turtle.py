@@ -1,5 +1,5 @@
-vel=70
-a=30
+vel=70 #Initial velocity
+a=30 #Initial inclination (in degrees)
 
 import math
 from time import sleep
