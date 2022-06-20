@@ -1,5 +1,5 @@
-vel=70 #Initial velocity
-a=30 #Initial inclination (in degrees)
+vel=60 #Initial velocity
+a=67 #Initial inclination
 
 import math
 from time import sleep
@@ -27,14 +27,13 @@ def proj(vel, angle):
     sx=-200
     sy=-200
     t=turtle.Turtle()
-    #t.speed(10)
-    t.speed(round(10*pow((vx**2)+(vy**2),0.5)/vel))
     t.hideturtle()
     t.penup()
     time=0
     t.setposition([sx,sy])
     t.pendown()
     while(sy>=-200):
+        t.speed(round(10*pow((vx**2)+(vy**2),0.5)/vel))
         sx+=vx*0.1
         sy+=(vy-9.8*time)*0.1
         t.setposition([sx,sy])
