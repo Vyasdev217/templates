@@ -1,8 +1,11 @@
 import numpy as np
-map=np.zeros((5,5))
-for i in range(len(map)):
-    map[i][0]=-1
-    map[0][i]=-1
-    map[i][len(map)-1]=-1
-    map[len(map)-1][i]=-1
-print(map)
+arr=np.zeros((5,5))
+def numpy_2darray_border(arr,val):
+    for i in range(len(arr)):
+        arr[i][0]=val
+        arr[0][i]=val
+        arr[i][len(arr)-1]=val
+        arr[len(arr)-1][i]=val
+    #print(arr)
+    return arr
+print(numpy_2darray_border(arr,-1))
